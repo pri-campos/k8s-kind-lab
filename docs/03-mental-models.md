@@ -10,7 +10,7 @@ Esta página reúne atalhos de decisão para o uso cotidiano do Kubernetes.
 ---
 ## Deployment
 **Pergunta que responde:**  
-👉 *Como a aplicação deve rodar?*
+👉🏾 *Como a aplicação deve rodar?*
 
 Responsabilidades mentais:
 - define Pods
@@ -24,7 +24,7 @@ Responsabilidades mentais:
 ---
 ## ReplicaSet
 **Pergunta que responde:**  
-👉 *Quantas instâncias devem existir agora?*
+👉🏾 *Quantas instâncias devem existir agora?*
 
 Responsabilidade mental:
 - garantir N Pods idênticos rodando
@@ -32,7 +32,7 @@ Responsabilidade mental:
 ---
 ## Pod
 **Pergunta que responde:**  
-👉 *Qual é a unidade real de execução?*
+👉🏾 *Qual é a unidade real de execução?*
 
 Responsabilidade mental:
 - agrupar containers que precisam compartilhar:
@@ -43,7 +43,7 @@ Responsabilidade mental:
 ---
 ## Service
 **Pergunta que responde:**  
-👉 *Como acessar a aplicação na rede?*
+👉🏾 *Como acessar a aplicação na rede?*
 
 Responsabilidades mentais:
 - fornece DNS estável
@@ -63,7 +63,7 @@ Responsabilidades mentais:
 ---
 ## Endpoints
 **Pergunta que responde:**  
-👉 *Quem está realmente atrás do Service agora?*
+👉🏾 *Quem está realmente atrás do Service agora?*
 
 Responsabilidade mental:
 - lista dinâmica de Pods ativos associados ao Service
@@ -71,12 +71,10 @@ Responsabilidade mental:
 ---
 # Namespace
 **Pergunta que responde:**  
-👉 *Onde esse conjunto de objetivos vive?*
+👉🏾 *Onde esse conjunto de objetivos vive?*
 
 Responsabilidades mentais:
 - organização
 - separação
 - governança
 - escopo de políticas
-
----
