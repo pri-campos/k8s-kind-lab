@@ -1,26 +1,34 @@
 # k8s-kind-lab
 
-Laboratório prático para aprender Kubernetes de forma **estrutural, observável e progressiva**, usando Kind (cluster local).
+Este diretório reúne um estudo prático e exploratório sobre Kubernetes, realizado em ambiente local com kind, com foco na compreensão da plataforma e de seus principais fluxos de entrega e execução.
 
-Este repositório não segue leitura linear.  
-O aprendizado acontece por **prática + consulta conceitual sob demanda**.
+O objetivo é apoiar o mapeamento de riscos, pontos de controle e atividades de qualidade em contextos onde o deploy e a operação de aplicações dependem de Kubernetes ou distribuições compatíveis (por exemplo, OpenShift/ROSA).
+
+O repositório não pressupõe leitura sequencial: o aprendizado ocorre por experimentação prática, com consulta conceitual sob demanda, conforme dúvidas e hipóteses surgem.
+
+O laboratório funciona como um instrumento de assessment técnico para atuação em QA em ambientes orquestrados, permitindo refletir sobre onde qualidade pode ser incorporada, quais falhas e degradações são relevantes e quais garantias são viáveis nesse contexto, reconhecendo seus limites.
 
 ---
-## Como usar este repositório (ordem recomendada)
+## Como usar este repositório
 
-### 0) Fundação mínima (leitura inicial obrigatória)
+### 0) Fundação conceitual (opcional, mas recomendada)
 
-Antes de qualquer prática, leia apenas:
+Caso você **ainda não esteja familiarizado** com os conceitos fundamentais de Kubernetes, inicie por este material.  
+Se já possuir esse repertório, avance para a próxima seção.
 
 - [01 — Core Concepts](docs/01-core-concepts.md)  
-
-> Objetivo: formar vocabulário básico e modelo mental.
-> Não é para decorar, é para saber “o que existe”.
+  → formação de vocabulário técnico mínimo e referências conceituais iniciais.
 
 ---
 ### 1) Aprendizado prático (eixo principal)
 
-A partir daqui, o aprendizado acontece **nos studies**:
+Esta é a **linha central do estudo**.  
+Os exercícios hands-on têm como objetivo **expor comportamentos da plataforma** para apoiar a identificação de **riscos, pontos de controle e oportunidades de qualidade**.
+
+Essa prática ocorre **em paralelo** com:
+- o glossário (para consulta de termos),
+- modelos mentais (para organização cognitiva),
+- e o artefato de *quality insights* (para registro analítico).
 
 📂 `studies/01-kind-lab/`
 
@@ -39,25 +47,25 @@ A partir daqui, o aprendizado acontece **nos studies**:
 ---
 ### 2) Documentação de apoio (consulta contínua)
 
-Estes documentos **não devem ser lidos em sequência**.  
-Use-os sempre que surgir dúvida durante a prática.
+Esses materiais **não são pré-requisitos formais**, mas devem ser utilizados sempre que surgirem dúvidas durante a prática.
 
 - [02 — Glossary](docs/02-glossary.md)  
-  → para vocabulário e termos técnicos
+  → vocabulário e termos técnicos
 
-- [03 — Mental Models](docs/03-mental-models.md)
-  → mapa mental para apoiar no entendimento
+- [03 — Mental Models](docs/03-mental-models.md)  
+  → modelos mentais para apoiar a compreensão da plataforma
 
 - [04 — Quality Insights](docs/04-quality-insights.md)  
-  → para entender impacto real em deploy, estabilidade, escala e produção
+  → registro analítico de observações e hipóteses relacionadas à qualidade
 
 ---
 ## Estrutura do repositório
 
-- `docs/` → documentação conceitual e de apoio
+- `docs/` → documentação conceitual e material de apoio
 - `studies/` → aprendizado prático guiado (hands-on)
-- `manifests/` → Kubernetes puro (infra limpa usada nos estudos)
+- `manifests/` → manifests Kubernetes utilizados nos experimentos
 
 ---
 ## Licença
+
 Consulte: [LICENSE](LICENSE)

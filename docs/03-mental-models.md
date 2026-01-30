@@ -1,8 +1,10 @@
 # Kubernetes — Atalhos Mentais
 
-Esta página reúne atalhos de decisão para o uso cotidiano do Kubernetes.
+Esta página reúne **atalhos mentais** para apoiar decisões e raciocínio cotidiano
+sobre o funcionamento do Kubernetes.  
+Eles não descrevem a arquitetura completa, mas ajudam a reduzir carga cognitiva.
 
-> **Deployment decide como rodar.  
+> **Deployment define a intenção.  
 > Pod executa.  
 > Service expõe.  
 > Controller reconcilia.**
@@ -13,7 +15,7 @@ Esta página reúne atalhos de decisão para o uso cotidiano do Kubernetes.
 👉🏾 *Como a aplicação deve rodar?*
 
 Responsabilidades mentais:
-- define Pods
+- define o **template de Pods**
 - define ReplicaSets
 - define probes
 - define estratégia de rollout
@@ -27,7 +29,8 @@ Responsabilidades mentais:
 👉🏾 *Quantas instâncias devem existir agora?*
 
 Responsabilidade mental:
-- garantir N Pods idênticos rodando
+- garantir que **N Pods idênticos** estejam em execução,
+  conforme definido pelo Deployment
 
 ---
 ## Pod
@@ -48,17 +51,16 @@ Responsabilidade mental:
 Responsabilidades mentais:
 - fornece DNS estável
 - fornece IP virtual
-- balanceia tráfego
+- distribui tráfego
 - abstrai a volatilidade dos Pods
 
 ---
 ## Conexão Service → Pods
-
 **Regra mental fundamental:**
 
 - Service **não conhece Deployment**
 - Service **não conhece ReplicaSet**
-- Service **olha apenas para Pods**
+- Service **seleciona Pods** com base em labels e estado
 
 ---
 ## Endpoints
@@ -66,10 +68,11 @@ Responsabilidades mentais:
 👉🏾 *Quem está realmente atrás do Service agora?*
 
 Responsabilidade mental:
-- lista dinâmica de Pods ativos associados ao Service
+- manter a lista dinâmica de Pods elegíveis para tráfego,
+  considerando seleção e readiness
 
 ---
-# Namespace
+## Namespace
 **Pergunta que responde:**  
 👉🏾 *Onde esse conjunto de objetivos vive?*
 

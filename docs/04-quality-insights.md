@@ -341,3 +341,8 @@ Escolher workload errado aumenta risco operacional e dificulta garantias.
 - separar responsabilidades: “o que é declaração” vs “o que é garantia do control plane”.
 - mapear defaults relevantes de Deployment quando campos não são declarados (risco de suposições).
 - consolidar política mínima (OPA/Kyverno) para PoC.
+- Executar prática exploratória para:
+  - subir workload controlado,
+  - introduzir variações declarativas,
+  - observar sinais do control plane e runtime,
+  - e derivar testes e desenho da pipeline de qualidade com base em evidência real.

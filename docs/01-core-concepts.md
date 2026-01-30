@@ -3,44 +3,44 @@
 ## O que é
 Kubernetes é um **orquestrador de workloads containerizados**.
 
-Ele não executa aplicações diretamente, mas **coordena, governa e reconcilia** como elas devem rodar em um conjunto de máquinas.
+Ele não executa aplicações diretamente; ele **agenda, coordena e reconcilia** como essas aplicações devem rodar em um conjunto de máquinas.
 
 Kubernetes:
-- **não é puramente hierárquico**
 - é **declarativo** (você descreve o estado desejado)
 - é **reativo** (reconcilia continuamente o estado atual com o desejado)
+- opera por meio de **controllers** que observam e atuam sobre recursos via API
 
 ---
 ## Para que serve
 Kubernetes serve para:
 
 - gerenciar workloads containerizados de forma **declarativa**
-- executar aplicações distribuídas com **confiabilidade**
-- escalar automaticamente conforme a carga
-- realizar deploy contínuo sem downtime
-- padronizar a operação de infraestrutura
+- executar aplicações distribuídas com **confiabilidade operacional**
+- escalar workloads conforme demanda (quando configurado)
+- suportar estratégias de rollout/rollback (quando utilizadas no fluxo de entrega)
+- padronizar aspectos operacionais de execução em cluster (deploy, rede, configuração, acesso)
 
 ---
 ## Quando isso importa
 Kubernetes se torna relevante quando:
 
-- há **múltiplos microsserviços**
+- há **múltiplos serviços** e dependências entre componentes
 - a **carga varia ao longo do tempo**
 - há necessidade de **alta disponibilidade**
-- falhas são esperadas e precisam ser toleradas
+- falhas são esperadas e precisam ser toleradas com mecanismos de recuperação
 
 ---
 ## Kubernetes e Qualidade de Software
-Kubernetes se conecta diretamente a práticas modernas de qualidade:
+Kubernetes se conecta a práticas modernas de qualidade em sistemas distribuídos:
 
 ### CI/CD
-Automação de build, teste e deploy, reduzindo erro humano e tempo de feedback.
+Automação de build, teste e deploy, reduzindo erro humano e encurtando ciclos de feedback.
 
 ### GitOps
-Git como **fonte da verdade** do estado desejado do sistema.
+Git como **fonte de referência** do estado desejado do sistema, com reconciliação automatizada.
 
 ### Infrastructure as Code (IaC)
-Infraestrutura versionada, auditável e reproduzível  
+Infraestrutura versionada, auditável e reproduzível.
 
 ### SRE
 Foco em confiabilidade do sistema:
@@ -57,16 +57,17 @@ Segurança do pipeline e dos artefatos:
 - assinaturas
 
 ---
-## Dois Planos que Coexistem no Kubernetes
+## Dois Planos que Coexistem no Kubernetes (modelo mental)
 
-Kubernetes opera simultaneamente em **dois planos complementares**:
+Este estudo utiliza um **modelo mental** com dois planos complementares para organizar a compreensão do Kubernetes.
+Esse modelo não substitui a nomenclatura oficial (*control plane* e *data plane*), mas ajuda a separar **governança de estado** de **execução**.
 
 ---
 ### Plano Lógico (Governança do Estado)
 
-Responsável por **definir, governar e reconciliar o estado desejado** do sistema.
+Responsável por **definir e representar o estado desejado** e por viabilizar a **reconciliação** via controllers.
 
-#### Estrutura lógica
+#### Estrutura lógica (visão por recursos)
 
 ```text
 Cluster
@@ -79,30 +80,25 @@ Cluster
     │   │   └── Pod(s) com identidade
     │   └── Job / CronJob
     │
-    ├── Controllers
-    │   ├── Deployment Controller
-    │   ├── ReplicaSet Controller
-    │   ├── StatefulSet Controller
-    │   └── HPA Controller
-    │
     ├── Services
     │   └── Selecionam Pods via labels
     │
-    ├── Policies
-    │   ├── HPA
-    │   ├── PDB
+    ├── Políticas e Controles (recursos e governança)
+    │   ├── PodDisruptionBudget (PDB)
     │   ├── NetworkPolicy
-    │   └── Admission Policies
+    │   └── Admission Policies (quando aplicável)
     │
     └── RBAC
+        ├── Roles / RoleBindings
         └── ServiceAccounts
 ```
 
 **Características do plano lógico:**
- - Não executa processos
- - Define intenções
- - É mantido por controllers
- - Vive no etcd
+ - não executa processos de aplicação
+ - representa intenções e configurações
+ - o estado desejado é registrado via API e persistido no banco de dados distribuído usado pelo Kubernetes para persistir o estado do cluster (etcd)
+ - controllers observam o estado e atuam para convergência (via API Server)
+
 
 ---
 ### Plano Físico (Execução Real)
@@ -110,26 +106,30 @@ Cluster
 Responsável por **executar processos em máquinas reais**, gerenciar recursos e isolamento.
 
 #### Estrutura física
+
 ```text
-Cluster
+Cluster (conjunto de nodes sob uma mesma instância de controle K8s)
 └── Node (VM ou máquina física)
     ├── CPU / Memória / Disco
     │
-    └── Pod (menor unidade executável, efêmera)
+    └── Pod (unidade executável, efêmera)
         ├── IP próprio (Network Namespace)
         ├── Volumes
         │
         └── Containers (processos)
 ```
+
 **Características do plano físico:**
- - Executa processos reais
- - Consome recursos computacionais
- - Aplica isolamento (cgroups, namespaces)
- - É onde falhas realmente acontecem
+ - executa processos reais (containers)
+ - consome recursos computacionais
+ - aplica isolamento (cgroups, namespaces)
+ - é onde falhas de execução e saturação se manifestam
 
 ---
 ### Conexão entre os planos
 
-O **plano lógico governa**, o **plano físico executa**.
+O plano lógico governa o estado desejado, e o plano físico executa.
 
-Controllers observam o estado real e agem continuamente para aproximá-lo do estado desejado.
+Controllers observam o estado atual e agem continuamente para aproximá-lo do estado desejado.
+
+> Ajustes como autoscaling (HPA) são realizados por controllers específicos que observam métricas e atualizam o estado desejado (por exemplo, quantidade de réplicas), influenciando a execução no plano físico.
